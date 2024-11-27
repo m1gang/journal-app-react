@@ -1,7 +1,13 @@
+import { BrowserRouter as Router } from "react-router"
+import { AppRouter } from "./router/AppRouter"
 
 
 export const JournalApp = () => {
   return (
-    <div>JournalApp</div>
+    <>
+    <Router>    
+    <AppRouter/>
+    </Router>
+    </>
   )
 }
