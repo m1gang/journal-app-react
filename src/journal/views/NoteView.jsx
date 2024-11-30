@@ -2,6 +2,7 @@ import { SaveOutlined } from "@mui/icons-material"
 import { Button, Grid, TextField, Typography } from "@mui/material"
 import { ImageGallery } from "../components"
 
+
 export const NoteView = () => {
   return (
     <Grid container direction='row' justifyContent='space-between' sx={{mb:1}}>
