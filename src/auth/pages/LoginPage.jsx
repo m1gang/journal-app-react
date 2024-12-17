@@ -2,12 +2,33 @@ import { Google } from "@mui/icons-material"
 import { Button, Grid, TextField, Typography, Link } from "@mui/material"
 import { Link as RouterLink } from "react-router"
 import { AuthLayout } from "../layout/AuthLayout"
+import { useForm } from "../../hooks/useForm"
+import { useDispatch } from "react-redux"
+import { checkingAuthentication, startGoogleSignIn } from "../../store/auth/thunks"
 
 export const LoginPage = () => {
+
+  const dispatch = useDispatch();
+
+  const { email, password, onInputChange } = useForm({
+    email: 'miguelangelyv1@gmail.com',
+    password: '123456'
+  })
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    dispatch(checkingAuthentication());
+  }
+
+  const onGoogleSignIn = () => {
+    console.log('onGoogleSignIn');
+    dispatch(startGoogleSignIn())
+  }
+
   return (
 
     <AuthLayout title="Login">
-      <form>
+      <form onSubmit={onSubmit}>
         <Grid container>
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField
@@ -15,6 +36,9 @@ export const LoginPage = () => {
               type="email"
               placeholder="correo@google.com"
               fullWidth
+              name='email'
+              value={email}
+              onChange={onInputChange}
             />
           </Grid>
           <Grid item xs={12} sx={{ mt: 2 }}>
@@ -23,24 +47,27 @@ export const LoginPage = () => {
               type="password"
               placeholder="Contraseña"
               fullWidth
+              name='password'
+              value={password}
+              onChange={onInputChange}
             />
           </Grid>
 
 
           <Grid container spacing={2} sx={{ mt: 2 }}>
             <Grid item xs={12} sm={6}>
-              <Button variant="contained" fullWidth>
+              <Button type="submit" variant="contained" fullWidth>
                 Login
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Button variant="outlined" fullWidth>
+              <Button onClick={onGoogleSignIn} variant="outlined" fullWidth>
                 <Google /> <Typography ml={1}>Google</Typography>
               </Button>
             </Grid>
           </Grid>
 
-          <Grid container direction='row' justifyContent='end' sx={{mt:2}}>
+          <Grid container direction='row' justifyContent='end' sx={{ mt: 2 }}>
             <Link component={RouterLink} color='inherit' to='/auth/register'>
               Crear un cuenta
             </Link>
