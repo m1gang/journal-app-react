@@ -3,10 +3,12 @@ import { AuthLayout } from "../layout/AuthLayout"
 import { Link as RouterLink } from "react-router"
 import { useForm } from "../../hooks/useForm";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { startCreatingUserWithEmailPassword } from "../../store/auth";
 
 const formData = {
-  displayName: 'Miguel YV',
-  email:'miguelangelyv1@gmail.com',
+  displayName: 'migatoSEnsei',
+  email:'miguelangelyv2@gmail.com',
   password: '123456',
 }
 
@@ -17,6 +19,8 @@ const formValidations = {
 }
 
 export const RegisterPage = () => {
+
+  const dispatch = useDispatch();
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const {
@@ -24,15 +28,16 @@ export const RegisterPage = () => {
     formValid, displayNameValid, emailValid, passwordValid
   } = useForm(formData,formValidations);
 
- 
-  
 
   const onSubmit = (e) => {
     e.preventDefault();
     setFormSubmitted(true);
-    console.log(formState);
-    
+    if(!formValid) return;
+    console.log(formState)
+    dispatch(startCreatingUserWithEmailPassword(formState))
   }
+
+
   return (
     <AuthLayout title="Register">
       <h1>Form Valid: {formValid ? 'Valido' : 'Incorrecto'}</h1>
