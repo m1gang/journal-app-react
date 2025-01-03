@@ -1,17 +1,17 @@
 import { Google } from "@mui/icons-material"
-import { Button, Grid, TextField, Typography, Link } from "@mui/material"
+import { Button, Grid, TextField, Typography, Link, Grid2, Alert } from "@mui/material"
 import { Link as RouterLink } from "react-router"
 import { AuthLayout } from "../layout/AuthLayout"
 import { useForm } from "../../hooks/useForm"
 import { useDispatch, useSelector } from "react-redux"
-import { checkingAuthentication, startGoogleSignIn } from "../../store/auth/thunks"
+import { checkingAuthentication, startGoogleSignIn, startLoginWithEmailPassword } from "../../store/auth/thunks"
 import { useMemo } from "react"
 
 export const LoginPage = () => {
 
-  const dispatch = useDispatch();
-  const { status } = useSelector(state => state.auth);
+  const { status, errorMessage } = useSelector(state => state.auth);
 
+  const dispatch = useDispatch();
   const { email, password, onInputChange } = useForm({
     email: 'miguelangelyv1@gmail.com',
     password: '123456'
@@ -22,6 +22,7 @@ export const LoginPage = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     dispatch(checkingAuthentication());
+    dispatch(startLoginWithEmailPassword({ email, password }));
   }
 
   const onGoogleSignIn = () => {
@@ -57,6 +58,20 @@ export const LoginPage = () => {
             />
           </Grid>
 
+          <Grid container spacing={2} sx={{ mt: 2 }}>
+
+            <Grid2 item xs={12} sm={12}
+              display={!!errorMessage ? 'flex' : 'none'}
+              sx={{
+                border: '0.5px solid red',
+                borderRadius: '5px',
+                width: '100%',
+                marginLeft: '16px'
+              }}
+            >
+              <Alert severity="error" sx={{ width: '100%' }}>{errorMessage}</Alert>
+            </Grid2>
+          </Grid>
 
           <Grid container spacing={2} sx={{ mt: 2 }}>
             <Grid item xs={12} sm={6}>
