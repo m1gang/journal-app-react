@@ -6,6 +6,7 @@ import { CheckingAuth } from "../ui"
 import { useCheckAuth } from "../hooks"
 
 
+
 export const AppRouter = () => {
 
    const {status} = useCheckAuth();
@@ -23,7 +24,6 @@ export const AppRouter = () => {
                     ?<Route path="/*" element={<JournalRoutes />} />
                     :<Route path="auth/*" element={<AuthRoutes />} />
                 }
-
                 <Route path="/*" element={ <Navigate to='/auth/login'/>}/>
 
             </Routes>
