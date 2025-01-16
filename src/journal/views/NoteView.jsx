@@ -44,8 +44,7 @@ export const NoteView = () => {
     }
 
     const onDelete = () => {
-        // dispatch(startDeletingNote());
-        console.log('eliminando');
+        dispatch(startDeletingNote());
         
     }
 
