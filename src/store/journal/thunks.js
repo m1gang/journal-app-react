@@ -98,10 +98,23 @@ export const startDeletingNote = () => {
 
         const {uid} = getState().auth;
         const {active:note} = getState().journal;
-        const docRef = doc(FirebaseDB,`${uid}/journal/notes/${note.id}`);
-        const resp = await deleteDoc( docRef );
+        // const docRef = doc(FirebaseDB,`${uid}/journal/notes/${note.id}`);
+        // const resp = await deleteDoc( docRef );
+
+        const promise = async () => {
+            const docRef = doc(FirebaseDB, `${uid}/journal/notes/${note.id}`);
+            await deleteDoc(docRef);
+            return note.id; // Este valor se pasará al success handler
+        };
         
-        dispatch(deleteNoteById(note.id));
+        toast.promise(promise(), {
+            loading: 'Eliminando nota...',
+            success: (deletedNoteId) => {
+                dispatch(deleteNoteById(deletedNoteId));
+                return 'Nota eliminada correctamente.';
+            },
+            error: 'Error al eliminar la nota.',
+        });
         
     }
 }

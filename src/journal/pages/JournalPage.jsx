@@ -5,7 +5,7 @@ import { NoteView, NothingSelectedView } from '../views'
 import { AddOutlined } from '@mui/icons-material'
 import { startNewNote } from '../../store/journal'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { Toaster } from "sonner"
 
 export const JournalPage = () => {
   const {isSaving,active} = useSelector(state=>state.journal);
@@ -37,6 +37,7 @@ export const JournalPage = () => {
         >
           <AddOutlined sx={{fonsize:20}}/>
         </IconButton>
+        <Toaster position="bottom-center" richColors closeButton/>
     </JournalLayout>
     </>
   )
