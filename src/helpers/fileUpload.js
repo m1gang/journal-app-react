@@ -19,18 +19,18 @@ export const fileUpload = async (file) => {
 
         if (!resp.ok) {
             const errorResponse = await resp.json();
-            console.error('Error response from Cloudinary:', errorResponse);
-            throw new Error('No se pudo subir la imagen');
+            // console.error('Error response from Cloudinary:', errorResponse);
+            // throw new Error('No se pudo subir la imagen');
         }
 
         const cloudResp = await resp.json();
-        console.log('Cloudinary response:', cloudResp);
+      
         return cloudResp.secure_url;
 
 
     } catch (error) {
         // throw new Error(error.message);
-        console.error('Error en fileUpload:', error);
+        // console.error('Error en fileUpload:', error);
         return null;
     }
 }
