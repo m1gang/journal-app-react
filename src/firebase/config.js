@@ -7,9 +7,16 @@ import { getEnvironments } from "../helpers";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-const env = getEnvironments();
-console.log( env );
-  // console.log( import.meta.env );
+const {
+  VITE_APIKEY,
+  VITE_AUTHDOMAIN,
+  VITE_PROJECTID,
+  VITE_STORAGEBUCKET,
+  VITE_MESSAGINGSENDERID,
+  VITE_APPID,
+} = getEnvironments();
+
+// console.log( import.meta.env );
 
 // Your web app's Firebase configuration
 
@@ -25,15 +32,17 @@ console.log( env );
 
 //Testing
 const firebaseConfig = {
-  apiKey: "AIzaSyAYXtYnTN-GAt-t7vF093BXM00ku8GMX2c",
-  authDomain: "react-app-j.firebaseapp.com",
-  projectId: "react-app-j",
-  storageBucket: "react-app-j.firebasestorage.app",
-  messagingSenderId: "807219248799",
-  appId: "1:807219248799:web:9ffc4810081b5e4213acaa"
+  apiKey: VITE_APIKEY,
+  authDomain: VITE_AUTHDOMAIN,
+  projectId: VITE_PROJECTID,
+  storageBucket: VITE_STORAGEBUCKET,
+  messagingSenderId: VITE_MESSAGINGSENDERID,
+  appId: VITE_APPID
 };
+
+console.log(firebaseConfig);
 
 // Initialize Firebase
 export const FirebaseApp = initializeApp(firebaseConfig);
-export const FirebaseAuth = getAuth( FirebaseApp );
-export const FirebaseDB = getFirestore( FirebaseApp );
+export const FirebaseAuth = getAuth(FirebaseApp);
+export const FirebaseDB = getFirestore(FirebaseApp);
