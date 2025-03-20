@@ -74,4 +74,3 @@ describe('Pruebas en AuthThunks', () => {
     
     
 })
-4
