@@ -31,6 +31,14 @@ const {
 // };
 
 //Testing
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAYXtYnTN-GAt-t7vF093BXM00ku8GMX2c",
+//   authDomain: "react-app-j.firebaseapp.com",
+//   projectId: "react-app-j",
+//   storageBucket: "react-app-j.firebasestorage.app",
+//   messagingSenderId: "807219248799",
+//   appId: "1:807219248799:web:9ffc4810081b5e4213acaa"
+// };
 const firebaseConfig = {
   apiKey: VITE_APIKEY,
   authDomain: VITE_AUTHDOMAIN,
@@ -40,7 +48,8 @@ const firebaseConfig = {
   appId: VITE_APPID
 };
 
-console.log(firebaseConfig);
+
+
 
 // Initialize Firebase
 export const FirebaseApp = initializeApp(firebaseConfig);

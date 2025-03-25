@@ -90,7 +90,7 @@ export const LoginPage = () => {
               <Button
                 disabled={isAuthenticating}
                 onClick={onGoogleSignIn}
-                variant="outlined"
+                variant="contained"
                 fullWidth
               >
                 <Google /> <Typography ml={1}>Google</Typography>
