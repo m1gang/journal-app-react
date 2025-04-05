@@ -1,16 +1,27 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { LoginPage } from "../../../src/auth/pages/LoginPage"
-import { Provider } from "react-redux"
+import { Provider, useDispatch } from "react-redux"
 import { configureStore } from "@reduxjs/toolkit"
-import { authSlice } from "../../../src/store/auth"
+import { authSlice, startLoginWithEmailPassword } from "../../../src/store/auth"
 import { MemoryRouter } from "react-router"
 import { notAuthenticatedState } from "../../fiixtures/authFixtures"
 
 const mockStartGoogleSignIn = jest.fn();
+const mockCheckingAuthentication = jest.fn();
+const mockStartLoginWithEmailPassword = jest.fn();
 
 jest.mock("../../../src/store/auth/thunks", () => ({
-    startGoogleSignIn: () => mockStartGoogleSignIn
+    startGoogleSignIn: () => mockStartGoogleSignIn,
+    checkingAuthentication: () => mockCheckingAuthentication,
+    startLoginWithEmailPassword: ({email,password}) => {
+        return () => mockStartLoginWithEmailPassword({email,password})
+    }
 }))
+
+jest.mock("react-redux",() =>({
+    ...jest.requireActual("react-redux"),
+    useDispatch: () => (fn)=> fn(),
+}));
 
 const store = configureStore({
     reducer: {
@@ -22,6 +33,9 @@ const store = configureStore({
 })
 
 describe('Pruebas en <LoginPage/>', () => {
+
+    beforeEach(() => jest.clearAllMocks());
+
     test('debe de mostrar el componente correctamente', () => {
         render(
             <Provider store={store}>
@@ -55,7 +69,7 @@ describe('Pruebas en <LoginPage/>', () => {
 
      test('submit debe llamar startLoginWithEmailPassword', () => {
         
-        const email = "migangD3V@gmail.com";
+        const email = "admin@admin.com";
         const password = "123456";
         
         render(
@@ -73,6 +87,14 @@ describe('Pruebas en <LoginPage/>', () => {
         
         const loginForm = screen.getByLabelText('submit-form');
         fireEvent.submit(loginForm);
+
+        expect(mockCheckingAuthentication).toHaveBeenCalled();
+
+        expect(mockStartLoginWithEmailPassword).toHaveBeenCalledWith({ 
+            email:email,
+            password:password
+        });
+
      })
      
 
